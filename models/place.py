@@ -6,7 +6,6 @@ from sqlalchemy import Table, Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from models.city import City
 from os import getenv
-from models import storage
 
 if getenv("HBNB_TYPE_STORAGE") == "db":
     place_amenity = Table("place_amenity", Base.metadata,
@@ -43,6 +42,7 @@ class Place(BaseModel, Base):
     else:
         @property
         def reviews(self):
+            from models import storage
             """
             Retrieves the reviews associated with a Place
             """
