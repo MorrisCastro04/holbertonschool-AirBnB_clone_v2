@@ -14,7 +14,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
 
 
-
 class DBStorage:
     """ database storage engine """
 
@@ -40,7 +39,7 @@ class DBStorage:
             objs.extend(self.__session.query(Review).all())
             objs.extend(self.__session.query(Amenity).all())
         else:
-            if type(cls) == str:
+            if type(cls) is str:
                 cls = eval(cls)
             objs = self.__session.query(cls)
         return {"{}.{}".format(type(o).__name__, o.id): o for o in objs}
@@ -61,7 +60,8 @@ class DBStorage:
     def reload(self):
         """ create all tables in the database  and initializes a session """
         Base.metadata.create_all(self.__engine)
-        session_creat = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_creat = sessionmaker(bind=self.__engine,
+                                     expire_on_commit=False)
         Session = scoped_session(session_creat)
         self.__session = Session()
 
