@@ -6,7 +6,7 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.route('/states_list', strict_slashes=False)
+@app.route('/cities_by_states', strict_slashes=False)
 def cities_states():
     """
     Renders a template that displays a list of cities grouped by states.
