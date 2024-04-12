@@ -6,6 +6,15 @@ from models.state import State
 app = Flask(__name__)
 
 
+@app.route('/states_list', strict_slashes=False)
+def cities_states():
+    """
+    Renders a template that displays a list of cities grouped by states.
+    """
+    states = storage.all(State).values()
+    return render_template('8-cities_by_states.html', states=states)
+
+
 @app.teardown_request
 def teardown(self):
     """
@@ -13,15 +22,6 @@ def teardown(self):
     It closes the storage connection.
     """
     storage.close()
-
-
-@app.route('/cities_by_states', strict_slashes=False)
-def cities_states():
-    """
-    Renders a template that displays a list of cities grouped by states.
-    """
-    states = sorted(storage.all(State).values(), key=lambda state: state.name)
-    return render_template('8-cities_by_states.html', states=states)
 
 
 if __name__ == '__main__':
